@@ -19,7 +19,7 @@
             //oh boy actual coding!!!
             
             //set a blue background
-            gl.clearColor(0.1, 0.2, 0.5, 1)
+            gl.clearColor(0.1, 0.2, 0.7, 1)
             
             //clear buffer bits (I wonder what happens if you omit/change order? and if there are other buffers? and if they can be messed with?...)
             gl.clear(gl.COLOR_BUFFER_BIT)
@@ -50,7 +50,38 @@
             
             //oh but I forgot, now we still have to write the shaders....
             
-            //I'll leave it for tomorrow (even though it would actually be fun) @
+            //I'll leave it for tomorrow (even though it would actually be fun)
+            //Scratch that doing it now!
+            
+            //this might need changed for 3D code later
+            let vertexShaderCode = `#version 300 es
+                precision highp float;
+                
+                //position of vertices
+                in vec2 vertPos;
+                
+                void main() {
+                    gl_Position = vec4(vertPos, 0, 1); //we don't need Z since it's 2D
+                }
+            `
+            
+            //and then we just copy/paste for fragment shader and change what we need
+            let fragmentShaderCode = `#version 300 es
+                precision highp float;
+                
+                //position of vertices
+                out vec4 fragColor;
+                
+                void main() {
+                    fragColor=vec4(1,1,1,1); //just go with all white idk how this works (:
+                }
+            `
+            
+            //now we make our program
+            let program = createProgram(vertexShaderCode, fragmentShaderCode)
+            gl.useProgram(program)
+            
+            //I am NOT making a mesh right now I'm too tired @
         </script>
     </body>
 </html>
