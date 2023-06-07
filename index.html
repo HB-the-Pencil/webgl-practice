@@ -3,5 +3,55 @@
         <title>webgl testing</title>
     </head>
     <body>
+        <canvas id="myCanvas" width=600 height=600></canvas>
+        <script>
+            //get canvas
+            let canvas = document.getElementById("myCanvas")
+            
+            //get webgl api stuf (totally just using the tutorial I have no clue how to do this lol)
+            let gl = canvas.getContext("webgl2")
+            
+            //blah blah catch unsupported webgl
+            if (!gl) {
+                alert("you don't have webgl2.... :C")
+                return
+            }
+            
+            //oh boy actual coding!!!
+            
+            //set a blue background
+            gl.clearColor(0.1, 0.2, 0.5, 1)
+            
+            //clear buffer bits (I wonder what happens if you omit/change order? and if there are other buffers? and if they can be messed with?...)
+            gl.clear(gl.COLOR_BUFFER_BIT)
+            
+            //set viewport
+            gl.viewport(0, 0, canvas.width, canvas.height)
+            
+            //and now to render shapes... there must be an easier way
+            //but first we must createProgram and stuff
+            
+            function createProgram(vshText, fshText) {
+                //shader stuff
+                vsh = gl.createShader(gl.VERTEX_SHADER)
+                fsh = gl.createShader(gl.FRAGMENT_SHADER)
+                gl.shaderSource(vsh, vshText)
+                gl.shaderSource(fsh, fshText)
+                gl.compileShader(vsh)
+                gl.compileShader(fsh) //why is vertex always first? hmm
+                
+                //create program and attach shaders (I'd be lost without tutorials)
+                let p = gl.createProgram()
+                gl.attachShader(p, vsh)
+                gl.attachShader(p, fsh)
+                gl.linkProgram(p)
+                
+                return p //and now you have a program (ugh so many lines for just this ;-;)
+            }
+            
+            //oh but I forgot, now we still have to write the shaders....
+            
+            //I'll leave it for tomorrow (even though it would actually be fun) @
+        </script>
     </body>
 </html>
